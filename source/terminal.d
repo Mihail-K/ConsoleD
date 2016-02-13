@@ -1024,7 +1024,8 @@ http://msdn.microsoft.com/en-us/library/windows/desktop/ms683193%28v=vs.85%29.as
 			wstring writeBufferw = to!wstring(writeBuffer);
 			while(writeBufferw.length) {
 				DWORD written;
-				WriteConsoleW(hConsole, writeBufferw.ptr, writeBufferw.length, &written, null);
+				// NOTE: WriteConsoleW expects a uint parameter to be given as length.
+				WriteConsoleW(hConsole, writeBufferw.ptr, cast(uint) writeBufferw.length, &written, null);
 				writeBufferw = writeBufferw[written .. $];
 			}
 
